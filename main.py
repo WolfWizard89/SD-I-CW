@@ -80,3 +80,115 @@ def table():
     win.close()
 # If conditions are in a user define for outputs
 # I used this user define in line number 150 and 151
+
+def calculate_progress_outcome(pass_credits, defer_credit, fail_credit):
+    if (pass_credits == 120) and (defer_credit == 0) and (fail_credit == 0):
+        return "Progress"
+    if pass_credits == 100 and (defer_credit == 0 or defer_credit == 20) and (
+            fail_credit == 0 or fail_credit == 20) and (defer_credit != fail_credit):
+        return "Progress (module trailer)"
+    if (0 <= pass_credits <= 40) and (0 <= defer_credit <= 120) and (80 <= fail_credit <= 120):
+        return "Exclude"
+    if (0 <= pass_credits <= 80) and (0 <= defer_credit <= 120) and (0 <= fail_credit <= 80):
+        return "Do not Progress-module retriever"
+# these variables used for graph
+progress = 0         #progress
+progress_mt = 0      #Progress (module trailer)
+module_retriever = 0 #Do not Progress-module retriever
+exclude = 0          #Exclude
+# these lists used for part 2
+progress_list = []          # input values list for Progress
+module_mt_list = []         # input values list for Progress (module trailer)
+module_retriever_list = []  # input values for Do not Progress-module retriever
+exclude_list = []           # input values for Exclude
+# After this comment, user identification option stage commence
+print("User identification options\n","1. Enter 1, if you are a member of staff.\n","2. Enter 2, if you are a student.")
+option_valid_values=[1,2] # If user input except 1 or 2, program will loop until user gives a valid input
+while True:
+    option_check=int(input("enter your option number: "))
+    if option_check not  in option_valid_values:
+        print("invalid option")
+    else:
+        break
+while True:
+    try:
+        # Inputs ( every input in the while loop because if user a input  wrong value or string, program will loop until user enters a valid value. )
+        while True:
+            valid_values =[0,20,40,60,80,100,120]
+            while True:
+                try:
+                    pass_credit = int(input("Please enter your pass credits: "))
+                    if (pass_credit not in valid_values):
+                        print("Out of range")
+                    else:
+                        break
+                except ValueError:
+                    print("Integer required")
+            while True:
+                try:
+                    defer_credit = int(input("Please enter your defer credits: "))
+                    if (defer_credit not in valid_values):
+                        print("Out of range")
+                    else:
+                        break
+                except ValueError:
+                    print("Integer required")
+            while True:
+                try:
+                    fail_credit = int(input("Please enter your fail credits: "))
+                    if (fail_credit not in valid_values):
+                        print("Out of range")
+                    else:
+                        break
+                except ValueError:
+                    print("Integer required")
+            # If total of 3 inputs are not equal to 120, program will print "Total incorrect".
+            total = (pass_credit + defer_credit + fail_credit)
+            if total != 120:
+                print("Total incorrect")
+                continue
+            # Using the user define function which is created for calculation
+            else:
+                progression_outcome = calculate_progress_outcome(pass_credit, defer_credit, fail_credit)
+                print(progression_outcome)
+            if option_check == 2: # If user a student program will end here
+                print("Thank You!")
+                break
+            # Increments for graph and collecting(append) input values for part 2. ( I used string format for enhance outputs of part 2 & part 3)
+            if progression_outcome == "Progress":
+                progress += 1
+                progress_list.append("{} Pass, {} Defer, {} Fail".format(pass_credit, defer_credit, fail_credit))
+            if progression_outcome == "Progress (module trailer)":
+                progress_mt += 1
+                module_mt_list.append("{} Pass, {} Defer, {} Fail".format(pass_credit, defer_credit, fail_credit))
+            if progression_outcome == "Do not Progress-module retriever":
+                module_retriever += 1
+                module_retriever_list.append("{} Pass, {} Defer, {} Fail".format(pass_credit, defer_credit, fail_credit))
+            if progression_outcome == "Exclude":
+                exclude += 1
+                exclude_list.append("{} Pass, {} Defer, {} Fail".format(pass_credit, defer_credit, fail_credit))
+            total_outcomes= progress + progress_mt + module_retriever + exclude
+            graphic_progress= -(progress*12)+600
+            graphic_progress_mt= -(progress_mt*12)+600
+            graphics_module_retriver= -(module_retriever*12)+600
+            graphics_exclude= -(exclude*12)+600
+            progress_amount= graphic_progress-10
+            progress_mt_amount= graphic_progress_mt-10
+            module_retriever_amount=graphics_module_retriver-10
+            exclude_amount=graphics_exclude-10
+            print("Would you like to enter another set of data?")
+            while True:
+                restart=str(input("Enter 'y' to yes or 'q' to quit and view results: "))
+                restart=restart.lower()
+                valid_restart_inputs={"y","q"}
+                if restart not in valid_restart_inputs:
+                    print("wrong letter")
+                else:
+                    break
+            if restart ==("q"):
+                try:
+                    table()  # Call the table user define function to display the histogram
+                except GraphicsError:
+                    print("")
+                    # part 2 & part 3 commence after this comment( In the end of the every line I have mentioned what part that line used for)
+                print("")
