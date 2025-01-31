@@ -192,3 +192,39 @@ while True:
                     print("")
                     # part 2 & part 3 commence after this comment( In the end of the every line I have mentioned what part that line used for)
                 print("")
+                
+                 print("Part 2:")
+                with open("W2052039_Part3_TextFile.txt", 'w') as file:  # open the file in writing mode (part3)
+                    file.write("Part 3:\n")
+                    print(" Progress:")                                 # printing Progress as title for input list (part 2)
+                    file.write(" progress:\n")                          # writeing progress in text file as a title (part3)
+                    for elements1 in progress_list:                     # using this loop for print every element line by line (part 2)
+                        print(" ",elements1)                            # printing input list as an output (part2)
+                        file.write(f"  {elements1}\n")                  # printing progress input list in text file  (part3)
+                    print(" Progress (module trailer):")                # printing Progress (module trailer) as title for input list (part2)
+                    file.write(" Progress (module trailer):\n")         # writeing Progress (module trailer) in text file as a title (part3)
+                    for elements2 in module_mt_list:                    # (part 2)
+                        print(" ",elements2)                            # printing input list as an output (part2)
+                        file.write(f"  {elements2}\n")                  # printing progress (module trailer) input list in text file  (part3)
+                    print(" Do not Progress-module retriever:")         # printing Do not Progress-module retriever: as title for input list (part2)
+                    file.write(" Do not Progress-module retriever:\n")  # writeing Do not Progress-module retriever in text file as a title (part3)
+                    for elements3 in module_retriever_list:             # (part 2)
+                        print(" ",elements3)                            # printing input list as an output (part2)
+                        file.write(f"  {elements3}\n")                  # printing Do not Progress-module retriever input list in text file  (part3)
+                    print(" Exclude:")                                  # printing Exclude as the title for a input list (part2)
+                    file.write(" Exclude:\n")                           # printing Exclude as the title in text file as a title (part3)
+                    for elements4 in exclude_list:                      # (part2)
+                        print(" ",elements4)                            # printing input list as an output (part2)
+                        file.write(f"  {elements4}\n")                  # print Exclude input list in text file  (part3)
+                    print("Thank you!")
+                    break
+            if restart == ("y"):
+                print("Program is restarting")
+    except RuntimeError:
+        print("An unexpected runtime issue occurred. Try again")
+        continue
+    except SyntaxError:
+        print("There is something wrong with the program. :)")
+        break
+    else:
+        break
